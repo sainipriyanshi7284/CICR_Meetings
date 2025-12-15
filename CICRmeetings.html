@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1.0">
+<title>CICR Command Relay Interface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cicr.css">
+</head>
+<body>
+<div id="splash-screen">
+    <img src="https://media.licdn.com/dms/image/v2/D560BAQHZvHdAAzLOxg/company-logo_200_200/company-logo_200_200/0/1705683330825/cicrjiit128_logo?e=1767225600&v=beta&t=SAJZZCC-p-7Eab0gESU8kj_i4CPzBKTbzeloh0kRUQc" 
+         alt="CICR Logo" 
+         id="splash-screen-logo">
+    <p>CLICK LOGO TO INITIALIZE AEGIS PROTOCOL</p>
+</div>
+
+<div class="container">
+	<div class="header-branding" role="banner">
+		<img src="https://media.licdn.com/dms/image/v2/D560BAQHZvHdAAzLOxg/company-logo_200_200/company-logo_200_200/0/1705683330825/cicrjiit128_logo?e=1767225600&v=beta&t=SAJZZCC-p-7Eab0gESU8kj_i4CPzBKTbzeloh0kRUQc" alt="CICR Organization Logo" class="header-logo header-logo-left">
+		<img src="https://media.licdn.com/dms/image/v2/D560BAQHZvHdAAzLOxg/company-logo_200_200/company-logo_200_200/0/1705683330825/cicrjiit128_logo?e=1767225600&v=beta&t=SAJZZCC-p-7Eab0gESU8kj_i4CPzBKTbzeloh0kRUQc" alt="CICR Organization Logo" class="header-logo header-logo-right">
+		
+		<div class="lamp lamp-left" title="System Status Indicator"></div>
+		<div class="lamp lamp-right" title="System Status Indicator"></div>
+		
+		<div id="digital-clock">Loading Clock...</div>
+
+		<h1>CREATIVITY INNOVATION CELL IN ROBOTICS ( CICR)</h1>
+		<div class="tracker-title" style="display: none;"></div>
+		<p class="designer-credit">DESIGNED BY KUMAR SHAURYA // DESIGNED FOR CICR</p>
+		<button id="theme-toggle-btn" aria-pressed="false">Toggle Digital Retro Mode</button>
+	</div>
+
+	<div id="login-screen" style="display: none;">
+		<div id="login-form-card" class="energy-frame">
+			<h2>ACCESS PROTOCOL: REQUIRED</h2>
+			<form id="login-form">
+				<div>
+					<label for="username">USERNAME</label>
+					<input type="text" id="username" required placeholder="ENTER AUTH ID">
+				</div>
+				<div>
+					<label for="password">SECURITY KEY</label>
+					<input type="password" id="password" required placeholder="ENTER SECURITY KEY">
+				</div>
+				<a href="mailto:kshaurya209@gmail.com?subject=CICR%20Attendance%20Tracker%20Password%20Reset%20Request" class="forgot-password-link">Forgot Security Key?</a>
+
+				<button type="submit">LOGIN & INITIALIZE</button>
+			</form>
+			<p id="login-error" style="color:var(--color-danger); margin-top:15px; display:none; font-family: var(--font-data);">Invalid Username or Password. Please try again.</p>
+		</div>
+	</div>
+    
+	<div id="app-content" style="display: none;">
+        
+        <nav class="tab-navigation" role="tablist">
+            <a href="#attendance" class="tab-link active" data-tab="attendance" role="tab" aria-selected="true">ATTENDANCE SHEET</a>
+            <a href="#history" class="tab-link" data-tab="history" role="tab" aria-selected="false">MEETING HISTORY</a>
+            <a href="#reports" class="tab-link" data-tab="reports" role="tab" aria-selected="false">REPORTS & ANALYTICS</a>
+            <a href="#scheduling" class="tab-link" data-tab="scheduling" role="tab" aria-selected="false">SCHEDULING MODULE</a>
+            <a href="#admin" class="tab-link" data-tab="admin" role="tab" aria-selected="false">ADMIN TOOLS</a>
+        </nav>
+
+		<div class="main-content">
+            
+            <section id="attendance-content" class="tab-content active" role="tabpanel" aria-labelledby="attendance-tab">
+				<div id="attendance-card" class="energy-frame" role="region" aria-labelledby="attendance-heading">
+					<h2 id="attendance-heading">CURRENT ATTENDANCE SHEET </h2>
+
+					<div class="controls-container">
+						<div>
+							<label for="attendance-date">DATE (YYYY-MM-DD) <span style="color:var(--color-accent-cyan);">[CLICK CALENDAR ICON]</span></label>
+							<div class="date-picker-wrapper">
+								<input type="date" id="attendance-date" />
+								<button type="button" id="open-calendar-btn" title="Open Calendar Picker">📅</button>
+							</div>
+						</div>
+						<div>
+							<label for="attendance-taker-select">ATTENDANCE TAKEN BY</label>
+							<select id="attendance-taker-select" aria-label="Select attendance taker">
+								<option value="" disabled selected>-- SELECT MEMBER --</option>
+							</select>
+						</div>
+						<div>
+							<label for="year-select">GROUP FILTER (SELECT MULTIPLE)</label>
+							<select id="year-select" multiple size="4" aria-label="Select year group">
+								<option value="4th Year">4th Year</option>
+								<option value="3rd Year">3rd Year</option>
+								<option value="2nd Year">2nd Year</option>
+								<option value="1st Year">1st Year</option>
+                                </select>
+						</div>
+						<div>
+							<label for="attendance-subject">MEETING TOPIC</label>
+							<select id="attendance-subject" onchange="handleTopicChange()">
+								<option value="Research Strategy" selected>Research Strategy Session</option>
+								<option value="Patent Review">Patent Review Committee</option>
+								<option value="Budget Planning">Quarterly Budget Planning</option>
+								<option value="Project Update">Project Progress Update (Team Alpha)</option>
+								<option value="Seminar Series">Seminar Series Planning</option>
+								<option value="Other">Other Meeting Topic</option>
+							</select>
+							<input type="text" id="custom-topic-input" placeholder="ENTER CUSTOM TOPIC" style="display:none; margin-top:5px;" />
+						</div>
+						
+						<div class="full-span">
+							<label for="meeting-summary">MEETING SUMMARY / KEY TAKEAWAYS</label>
+							<textarea id="meeting-summary" rows="3" placeholder="INITIATE SUMMARY INPUT..."></textarea>
+						</div>
+
+						<div class="full-span">
+							<button id="create-gmeet-btn">➕ INITIALIZE VIRTUAL MEET LINK</button>
+						</div>
+
+					</div>
+
+					<p class="current-class-display" style="font-family: var(--font-data);">CURRENT SESSION: <strong id="current-subject-display" style="color: var(--color-accent-cyan);">Research Strategy Session</strong></p>
+
+					<ul id="attendance-list"><li>LOAD MEMBER DATABASE VIA GROUP FILTER.</li></ul>
+
+					<div id="attendance-summary" class="summary-card" style="border-top: 2px solid var(--color-border-tech); padding-top: 20px; margin-top: 20px;">
+						<div class="summary-header" style="display: flex; justify-content: space-between; align-items: center;">
+							<h3 style="font-family: var(--font-heading); margin: 0;">ATTENDANCE METRICS</h3>
+							<button id="save-data-btn" class="status-button btn-save">💾 COMMIT DATA & RESET</button>
+						</div>
+						<div class="summary-totals" style="font-family: var(--font-data); margin-top: 10px;">
+							<p>TOTAL PRESENT: <strong id="total-present">0</strong></p>
+							<p>TOTAL ABSENT: <strong id="total-absent">0</strong></p>
+							<p>PRESENT RATIO: <strong id="present-percentage" class="percentage-value">0.0%</strong></p>
+						</div>
+						<h4 style="margin-top:15px; font-size:16px; font-family: var(--font-heading);">ABSENTEE LIST:</h4>
+						<ul id="absent-list" style="list-style-type: square; padding-left: 20px;"><li>AWAITING DATA MARKUP.</li></ul>
+					</div>
+				</div>
+			</section>
+
+            <section id="history-content" class="tab-content" role="tabpanel" aria-labelledby="history-tab">
+				<div id="history-card" class="energy-frame" role="region" aria-labelledby="history-heading">
+					<h2 id="history-heading">SYSTEM LOGS: MEETING HISTORY</h2>
+					<div class="history-controls" style="display: flex; gap: 10px; margin-bottom: 20px;">
+						<button id="export-excel-btn" class="btn-utility btn-export-excel" title="EXPORT DATA TO CSV">E X P O R T [L O G]</button>
+						<button id="remove-selected-btn" class="btn-utility btn-remove-selected">D E L E T E [S E L E C T]</button>
+						<button id="clear-history-btn" class="btn-utility btn-clear-history">D E L E T E [A L L]</button>
+					</div>
+					<ul id="history-list" class="history-list" style="font-family: var(--font-data);"><li>LOADING LOGS...</li></ul>
+				</div>
+			</section>
+
+            <section id="reports-content" class="tab-content" role="tabpanel" aria-labelledby="reports-tab">
+                <div id="personal-report-card" class="energy-frame" role="region" aria-labelledby="report-heading">
+                    <h2 id="report-heading">PERFORMANCE ANALYTICS: ATTENDANCE RATIO</h2>
+                    <div class="table-wrapper">
+                        <table id="personal-report-table">
+                            <thead>
+                                <tr>
+                                    <th>MEMBER NAME</th>
+                                    <th>GROUP/UNIT</th>
+                                    <th style="text-align: right;">ATTENDANCE % (TRACKED)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="personal-report-body">
+                                <tr><td colspan="3" style="font-family: var(--font-data);">AWAITING ANALYTICS CALCULATION...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="scheduling-content" class="tab-content" role="tabpanel" aria-labelledby="scheduling-tab">
+                <div id="scheduling-card" class="energy-frame">
+                    <h3 style="font-family: var(--font-heading);">EMAIL SCHEDULING MODULE</h3>
+                    <p style="font-family: var(--font-data); font-size: 14px; opacity: 0.7; color: var(--color-schedule);">// WARNING: This module generates a local mailto link. You must manually send the email using your device's mail client.</p>
+                    <div class="scheduling-grid">
+                        <div>
+                            <label for="schedule-initiator-select">REQUEST SENDER (NAME)</label>
+                            <select id="schedule-initiator-select">
+                                <option value="" disabled selected>-- SELECT SENDER --</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="schedule-recipient-select">REQUEST RECIPIENT (NAME)</label>
+                            <select id="schedule-recipient-select">
+                                <option value="" disabled selected>-- SELECT RECIPIENT --</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="sender-email">SENDER'S GMAIL ID (FOR REPLY)</label>
+                            <input type="email" id="sender-email" placeholder="sender.id@gmail.com">
+                        </div>
+                        <div>
+                            <label for="recipient-email">RECIPIENT'S EMAIL/CONTACT</label>
+                            <input type="text" id="recipient-email" placeholder="recipient.id@email.com">
+                        </div>
+
+                        <div class="full-span">
+                            <label for="schedule-subject">MEETING SUBJECT</label>
+                            <input type="text" id="schedule-subject" placeholder="ENTER REQUEST SUBJECT LINE">
+                        </div>
+                        <div>
+							<label for="schedule-date">PREFERRED DATE <span style="color:var(--color-accent-cyan);">[CLICK CALENDAR ICON]</span></label>
+							<div class="date-picker-wrapper">
+                            	<input type="date" id="schedule-date">
+								<button type="button" id="open-calendar-scheduler-btn" title="Open Calendar Picker">📅</button>
+							</div>
+                        </div>
+						<div>
+							<label for="schedule-time">PREFERRED TIME</label>
+							<div class="date-picker-wrapper">
+								<input type="time" id="schedule-time" value="10:00">
+							</div>
+						</div>
+                        <div>
+                            <label for="schedule-location-type">LOCATION TYPE</label>
+                            <select id="schedule-location-type">
+                                <option value="Online">ONLINE (VIRTUAL INTERFACE)</option>
+                                <option value="Offline">OFFLINE (PHYSICAL VENUE)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="schedule-location-details">LOCATION DETAILS</label>
+                            <input type="text" id="schedule-location-details" placeholder="E.G., MEETING ROOM ALPHA OR MEET LINK">
+                        </div>
+                        <div class="full-span">
+                            <button id="schedule-meeting-btn" type="button">📤 GENERATE & SEND REQUEST [MAILTO]</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="admin-content" class="tab-content" role="tabpanel" aria-labelledby="admin-tab">
+                <div id="admin-tools-wrapper">
+                    <div id="member-management-card" class="energy-frame">
+                        <h3 style="font-family: var(--font-heading); color: var(--color-accent-violet);">USER DATABASE MANAGEMENT</h3>
+                        <div class="member-control-grid">
+                            <div>
+                                <label for="new-member-name">NEW USER NAME</label>
+                                <input type="text" id="new-member-name" placeholder="E.G., ANIL SHARMA">
+                            </div>
+                            <div>
+                                <label for="new-member-group">ASSIGN UNIT/GROUP</label>
+                                <select id="new-member-group">
+                                    <option value="4th Year">4TH YEAR</option>
+                                    <option value="3rd Year">3RD YEAR</option>
+                                    <option value="2nd Year">2ND YEAR</option>
+                                    <option value="1st Year" selected>1ST YEAR</option>
+                                    <option value="Custom">CUSTOM UNIT...</option>
+                                </select>
+                            </div>
+                            <div style="grid-column: span 2;">
+                                <button id="add-member-btn" type="button">➕ ADD NEW USER TO DATABASE</button>
+                            </div>
+
+                            <div class="member-control-group">
+                                <label for="remove-member-select">SELECT USER TO REMOVE</label>
+                                <select id="remove-member-select">
+                                    </select>
+                            </div>
+                            <div style="padding-top:15px; margin-top:10px;">
+                                <button id="remove-member-btn" type="button">➖ REMOVE USER FROM DATABASE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+			
+		</div>
+
+		<footer class="footer" role="contentinfo" style="padding: 10px; text-align: center; font-size: 12px; opacity: 0.6; font-family: var(--font-data);">
+			<p id="attendance-taken-by">ATTENDANCE TAKEN BY: [NONE SELECTED]</p>
+		</footer>
+	</div>
+	</div>
+<script src="cicr.js"></script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+/* --- CORE COLOR PALETTE & VARIABLES --- */
+:root {
+	/* Backgrounds & Base */
+	--color-bg-primary: #000510; /* Obsidian Black (Deepest) */
+	--color-bg-secondary: #0A1425; /* Deep Carbon - Card/Panel */
+	--color-border-tech: #1F304A; /* Dark Border/Separator */
+	--color-text-base: #D9E8FF; /* Monochromatic White */
+
+	/* Accents & Data */
+	--color-accent-cyan: #00DFFF; /* Primary Energy Line */
+	--color-accent-violet: #6A00FF; /* Secondary Energy/Deep Glow */
+	--color-success: #00FF7F; /* Neon Green (Vitals OK) */
+	--color-danger: #FF3366; /* High-Voltage Red (Alert) */
+	--color-schedule: #FFC107; /* Amber/Orange */
+
+	--font-heading: 'Orbitron', sans-serif;
+	--font-body: 'Inter', sans-serif;
+	--font-data: 'JetBrains Mono', monospace;
+	--transition-speed: 0.2s;
+	--padding-general: 20px;
+}
+/* --- ANIMATION KEYFRAMES (Energy Flow and Flicker) --- */
+@keyframes flow-energy {
+    from { transform: translateX(0%); }
+    to { transform: translateX(-50%); } /* Shift background by half the size */
+}
+@keyframes subtle-flicker {
+    0%, 100% { opacity: 0.95; }
+    50% { opacity: 1; }
+    70% { opacity: 0.9; }
+}
+@keyframes glow {
+    from { box-shadow: 0 0 10px var(--color-accent-cyan); }
+    to { box-shadow: 0 0 20px var(--color-accent-cyan), 0 0 30px var(--color-accent-violet); }
+}
+
+/* --- GLOBAL STYLES --- */
+body {
+	font-family: var(--font-body);
+	margin: 0;
+	background-color: var(--color-bg-primary);
+	padding: 20px;
+	color: var(--color-text-base);
+	transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+	animation: subtle-flicker 10s linear infinite; /* Overall system life pulse */
+	line-height: 1.4;
+}
+
+/* --- SPLASH SCREEN STYLING --- */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg-primary);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.5s ease;
+}
+#splash-screen-logo {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--color-accent-cyan);
+    animation: glow 1.5s infinite alternate;
+    transition: transform 0.3s ease;
+}
+#splash-screen-logo:hover {
+    transform: scale(1.05);
+}
+#splash-screen p {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    color: var(--color-text-base);
+    margin-top: 30px;
+    opacity: 0.7;
+}
+
+
+/* --- CONTAINER & HEADER --- */
+.container {
+	max-width: 1100px;
+	margin: 0 auto;
+	border-radius: 4px;
+	background-color: var(--color-bg-secondary);
+	border: 1px solid var(--color-border-tech);
+	box-shadow: 0 0 10px rgba(0, 223, 255, 0.05); 
+}
+
+.header-branding {
+	text-align: center;
+	padding: 30px var(--padding-general) 20px;
+	background: linear-gradient(180deg, rgba(10, 20, 37, 1) 0%, rgba(106, 0, 255, 0.05) 100%);
+	position: relative; 
+}
+
+/* LOGO STYLING */
+.header-logo {
+	position: absolute;
+	top: 15px;
+	width: 50px; /* Size of the logo */
+	height: 50px;
+	border-radius: 50%; /* Make it perfectly round */
+	object-fit: cover;
+	border: 2px solid var(--color-accent-cyan); /* Optional subtle border/glow */
+	box-shadow: 0 0 10px rgba(0, 223, 255, 0.5); 
+	z-index: 10;
+}
+/* Left Logo Position */
+.header-logo-left {
+    left: 20px;
+}
+/* Right Logo Position */
+.header-logo-right {
+    right: 20px;
+}
+
+/* Hide the old lamp indicators now that we have logos in their place */
+.header-logo-left + .lamp-left {
+    display: none; 
+}
+.header-logo-right + .lamp-right {
+    display: none; 
+}
+
+
+/* Robotic Icon Styling (Retained only for structure, but hidden by logo CSS above) */
+.lamp {
+	position: absolute;
+	top: 15px;
+	font-size: 30px;
+	line-height: 1;
+	color: var(--color-accent-cyan); 
+	text-shadow: 0 0 8px var(--color-accent-cyan), 0 0 20px var(--color-accent-violet);
+}
+.lamp-left { left: 20px; }
+.lamp-right { right: 20px; }
+
+
+#digital-clock {
+	font-family: var(--font-data);
+	font-size: 18px;
+	color: var(--color-success); /* Green for Vitals/Time */
+	text-shadow: 0 0 5px var(--color-success);
+	line-height: 1;
+}
+
+h1 {
+	font-family: var(--font-heading);
+	font-size: 28px;
+	font-weight: 700;
+	margin: 0 0 5px 0;
+	color: var(--color-text-base);
+	text-shadow: 0 0 5px rgba(0, 223, 255, 0.4);
+}
+
+.tracker-title {
+	font-weight: 600;
+	font-size: 16px;
+	opacity: 0.8;
+	display: none; 
+}
+.designer-credit { font-size: 12px; opacity: 0.5; margin-top: 5px; font-family: var(--font-data); }
+
+#theme-toggle-btn {
+	margin-top: 15px;
+	padding: 8px 16px;
+	font-weight: bold;
+	cursor: pointer;
+	background-color: var(--color-accent-violet);
+	color: var(--color-text-base);
+	border: 1px solid var(--color-accent-violet);
+	border-radius: 4px;
+	transition: all var(--transition-speed);
+	font-family: var(--font-data);
+}
+#theme-toggle-btn:hover {
+	box-shadow: 0 0 10px var(--color-accent-violet);
+	background-color: #6a46b4;
+}
+
+/* --- NAVIGATION TABS --- */
+.tab-navigation {
+	display: flex;
+	justify-content: space-around;
+	background-color: var(--color-bg-primary);
+	border-bottom: 1px solid var(--color-border-tech);
+}
+.tab-link {
+	padding: 15px 20px;
+	flex-grow: 1;
+	text-align: center;
+	cursor: pointer;
+	font-family: var(--font-heading);
+	font-size: 14px;
+	color: var(--color-text-base);
+	border-bottom: 3px solid transparent;
+	transition: all var(--transition-speed);
+	text-decoration: none;
+	user-select: none;
+}
+.tab-link:hover {
+	color: var(--color-accent-cyan);
+}
+.tab-link.active {
+	color: var(--color-accent-cyan);
+	border-bottom-color: var(--color-accent-cyan);
+	background-color: var(--color-bg-secondary);
+	box-shadow: 0 0 8px rgba(0, 223, 255, 0.3);
+}
+
+/* --- CARDS & ENERGY FRAMES --- */
+.main-content { padding: var(--padding-general); }
+.tab-content { padding-top: 20px; display: none; }
+.tab-content.active { display: block; }
+
+.energy-frame {
+	position: relative;
+	overflow: hidden; 
+	border: 1px solid var(--color-border-tech);
+	background-color: var(--color-bg-secondary);
+	border-radius: 2px;
+	margin-bottom: 20px;
+	padding: var(--padding-general); /* Applied directly to cards */
+}
+
+/* PSEUDO-ELEMENT FOR THE FLOWING LIGHT */
+.energy-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400%; 
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 15%,
+        var(--color-accent-cyan) 20%,
+        var(--color-accent-cyan) 25%
+    );
+    background-size: 200% 100%; 
+    opacity: 0.1; 
+    animation: flow-energy 5s linear infinite;
+    z-index: 1; 
+    pointer-events: none;
+}
+.energy-frame:hover::before {
+    animation-duration: 1.5s; 
+    opacity: 0.2;
+}
+
+h2 {
+	font-family: var(--font-heading);
+	font-size: 20px;
+	color: var(--color-accent-cyan);
+	margin-bottom: 20px;
+}
+h2::before { content: '[CMD]'; margin-right: 10px; font-size: 14px; color: var(--color-success); font-family: var(--font-data); }
+#history-card h2::before { content: '[LOG]'; color: var(--color-accent-violet); }
+#personal-report-card h2::before { content: '[ANL]'; color: var(--color-schedule); }
+#scheduling-card h3 { color: var(--color-schedule); font-family: var(--font-heading); margin: 0; }
+#member-management-card h3 { color: var(--color-accent-violet); font-family: var(--font-heading); margin: 0; }
+#admin-tools-wrapper { display: flex; flex-direction: column; gap: 20px; }
+
+
+/* --- FORMS & INPUTS (JetBrains Mono) --- */
+.controls-container, .scheduling-grid, .member-control-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px dashed var(--color-border-tech);
+	margin-bottom: 20px;
+}
+.full-span { grid-column: span 2; }
+#login-form-card .full-span { grid-column: span 1; } /* Override for login grid */
+
+
+/* Set height for multi-select box to show options */
+#year-select {
+    height: 100px; 
+}
+
+
+label {
+	font-family: var(--font-data);
+	color: var(--color-text-base);
+	opacity: 0.8;
+	font-size: 12px;
+	text-transform: uppercase;
+}
+
+input[type="date"], input[type="time"], select, input[type="text"], input[type="email"], input[type="password"], textarea {
+	font-family: var(--font-data);
+	padding: 10px 12px;
+	border: 1px solid var(--color-border-tech);
+	border-radius: 2px;
+	font-size: 14px;
+	width: 100%;
+	box-sizing: border-box;
+	color: var(--color-text-base);
+	background-color: var(--color-bg-primary);
+	transition: all var(--transition-speed);
+}
+
+/* Date/Time Picker Wrapper Style (re-used for both modules) */
+.date-picker-wrapper {
+	display: flex;
+	gap: 5px; /* Space between input and button */
+}
+.date-picker-wrapper input[type="date"],
+.date-picker-wrapper input[type="time"] {
+	flex-grow: 1;
+}
+/* Style for both calendar buttons */
+#open-calendar-btn, #open-calendar-scheduler-btn {
+	padding: 10px 12px;
+	min-width: 40px;
+	background-color: var(--color-accent-violet);
+	color: var(--color-text-base);
+	border-radius: 2px;
+	cursor: pointer;
+	line-height: 1;
+	font-size: 16px;
+	font-family: var(--font-data);
+	transition: background-color var(--transition-speed);
+	border: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4); /* Match other buttons */
+}
+#open-calendar-btn:hover, #open-calendar-scheduler-btn:hover {
+	background-color: #6a46b4;
+	box-shadow: 0 0 8px var(--color-accent-violet);
+}
+
+#login-form button[type="submit"] { margin-top: 20px; }
+
+
+input:focus, select:focus, textarea:focus {
+	border-color: var(--color-accent-cyan);
+	box-shadow: 0 0 0 1px var(--color-accent-cyan), 0 0 5px rgba(0, 223, 255, 0.7);
+}
+
+/* --- BUTTONS --- */
+.status-button, .btn-utility, #create-gmeet-btn, #schedule-meeting-btn, #add-member-btn, #remove-member-btn, #login-form button[type="submit"] {
+	font-family: var(--font-data);
+	font-weight: 700;
+	padding: 10px 15px;
+	border-radius: 2px;
+	cursor: pointer;
+	transition: all var(--transition-speed);
+	text-transform: uppercase;
+	font-size: 13px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+	border: none;
+}
+
+/* Login Button */
+#login-form button[type="submit"] {
+	background-color: var(--color-accent-cyan);
+	color: var(--color-bg-primary);
+	border: 1px solid var(--color-accent-cyan);
+}
+#login-form button[type="submit"]:hover {
+	box-shadow: 0 0 10px var(--color-accent-cyan);
+	background-color: #33FFFF;
+}
+
+#create-gmeet-btn { background-color: var(--color-success); color: var(--color-bg-primary); }
+#create-gmeet-btn:hover { background-color: #00FFBB; box-shadow: 0 0 10px var(--color-success); transform: scale(1.01); }
+
+.btn-save { background-color: var(--color-accent-violet); color: var(--color-text-base); }
+.btn-save:hover { box-shadow: 0 0 10px var(--color-accent-violet); transform: scale(1.01); }
+
+/* Utility Buttons (Outline Style) */
+.btn-utility { background: transparent; border: 1px solid; color: var(--color-text-base); }
+.btn-export-excel { border-color: var(--color-success); color: var(--color-success); }
+.btn-export-excel:hover { background: var(--color-success); color: var(--color-bg-primary); box-shadow: 0 0 8px var(--color-success); }
+
+.btn-clear-history, .btn-remove-selected { border-color: var(--color-danger); color: var(--color-danger); }
+.btn-clear-history:hover, .btn-remove-selected:hover { background: var(--color-danger); color: var(--color-bg-primary); box-shadow: 0 0 8px var(--color-danger); }
+
+/* Scheduling */
+#schedule-meeting-btn { background-color: var(--color-schedule); color: var(--color-bg-primary); }
+#schedule-meeting-btn:hover { background-color: #FFD700; box-shadow: 0 0 10px var(--color-schedule); }
+#add-member-btn { background-color: var(--color-success); color: var(--color-bg-primary); }
+#remove-member-btn { background-color: var(--color-danger); color: var(--color-bg-primary); }
+
+
+/* --- ATTENDANCE LIST (DATA FEED) --- */
+#attendance-list, #history-list { font-family: var(--font-data); }
+.current-class-display strong { font-family: var(--font-data); }
+#attendance-list { list-style: none; padding: 0; max-height: 400px; overflow-y: auto; border: 1px solid var(--color-border-tech); border-radius: 2px; }
+.student-item {
+	display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid var(--color-border-tech); 
+	border-left: 4px solid var(--color-border-tech); transition: all var(--transition-speed);
+}
+
+.student-name { font-family: var(--font-data); font-weight: 600; font-size: 16px; color: var(--color-accent-cyan); }
+.student-id { font-family: var(--font-data); font-size: 12px; color: var(--color-text-base); opacity: 0.6; margin-top: 2px; }
+
+.student-item.present { border-left-color: var(--color-success); background-color: rgba(0, 255, 127, 0.05); }
+.student-item.absent { border-left-color: var(--color-danger); background-color: rgba(255, 51, 102, 0.05); }
+
+/* List Buttons */
+.status-button { min-width: 80px; border: 1px solid; opacity: 0.4; background: transparent; }
+.btn-present { border-color: var(--color-success); color: var(--color-success); }
+.btn-absent { border-color: var(--color-danger); color: var(--color-danger); }
+.btn-unmarked { border-color: var(--color-text-base); color: var(--color-text-base); }
+
+.student-item .btn-present[style*="opacity: 1.0"] { opacity: 1.0 !important; background-color: var(--color-success); color: var(--color-bg-primary); }
+.student-item .btn-absent[style*="opacity: 1.0"] { opacity: 1.0 !important; background-color: var(--color-danger); color: var(--color-bg-primary); }
+.student-item .btn-unmarked[style*="opacity: 1.0"] { opacity: 1.0 !important; background-color: var(--color-bg-secondary); color: var(--color-text-base); }
+
+/* Report Table */
+#personal-report-table { width: 100%; border-collapse: collapse; }
+#personal-report-table th, #personal-report-table td { font-family: var(--font-data); border: 1px solid var(--color-border-tech); padding: 10px; text-align: left; }
+#personal-report-table th { background-color: var(--color-bg-primary); text-transform: uppercase; font-size: 12px; }
+.percentage-value { color: var(--color-success); }
+.report-percentage { color: var(--color-success); text-align: right !important;}
+.report-percentage.poor { color: var(--color-danger); }
+.table-wrapper { border: 1px solid var(--color-border-tech); border-radius: 2px; overflow: hidden; }
+
+
+/* History Details */
+.history-header-wrapper { display: flex; align-items: center; padding: 10px 15px; }
+.history-header-btn { font-family: var(--font-data); color: var(--color-text-base); background: none; border: none; cursor: pointer; flex-grow: 1; display: flex; justify-content: space-between; align-items: center; text-align: left; }
+.history-item { border-bottom: 1px solid var(--color-border-tech); }
+.history-item:last-child { border-bottom: none; }
+.history-details { display: none; padding: 0 15px; }
+.history-item.active .history-details { display: block; padding: 10px 30px 10px 30px; }
+.full-record-list li { color: var(--color-text-base); opacity: 0.8; }
+.full-record-list { border-top: 1px solid var(--color-border-tech); background-color: var(--color-bg-primary); list-style: none; padding: 10px 20px; }
+
+/* Login Screen */
+#login-form-card { max-width: 450px; margin: 50px auto; padding: 40px; background-color: var(--color-bg-secondary); border: 2px solid var(--color-accent-cyan); border-radius: 6px; }
+#login-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+#login-form > div { grid-column: span 1; }
+#login-form-card button[type="submit"] { grid-column: span 2; }
+.forgot-password-link { grid-column: span 2; display: block; text-align: right; font-size: 12px; opacity: 0.7; color: var(--color-text-base); text-decoration: none; margin-top: -10px; }
+
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+	.tab-navigation { flex-wrap: wrap; }
+	.tab-link { flex-basis: 50%; } 
+	.controls-container, .scheduling-grid, .member-control-grid { grid-template-columns: 1fr; gap: 15px; }
+	.scheduling-grid .full-span { grid-column: span 1; }
+	.student-item { flex-direction: column; align-items: flex-start; }
+	.student-info { margin-bottom: 10px; }
+	#login-form { grid-template-columns: 1fr; }
+	#login-form > div { grid-column: span 1; }
+	#login-form-card button[type="submit"] { grid-column: span 1; }
+}
